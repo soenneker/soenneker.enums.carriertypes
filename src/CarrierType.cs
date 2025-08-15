@@ -1,10 +1,12 @@
 ﻿using Intellenum;
+using Soenneker.Attributes.PublicOpenApiObject;
 
 namespace Soenneker.Enums.CarrierTypes;
 
 /// <summary>
 /// An enumerator describing carrier types
 /// </summary>
+[PublicOpenApiObject]
 [Intellenum<string>]
 public sealed partial class CarrierType
 {
