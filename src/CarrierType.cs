@@ -1,4 +1,4 @@
-﻿using Intellenum;
+using Soenneker.Gen.EnumValues;
 using Soenneker.Attributes.PublicOpenApiObject;
 
 namespace Soenneker.Enums.CarrierTypes;
@@ -7,7 +7,7 @@ namespace Soenneker.Enums.CarrierTypes;
 /// An enumerator describing carrier types
 /// </summary>
 [PublicOpenApiObject]
-[Intellenum<string>]
+[EnumValue<string>]
 public sealed partial class CarrierType
 {
     public static readonly CarrierType FixedLine = new(nameof(FixedLine));
