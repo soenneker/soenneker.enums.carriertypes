@@ -5,7 +5,7 @@
 
 # Soenneker.Enums.CarrierTypes
 
-Classifies a telephone number by the network service or carrier category that provides it.
+A string-backed enum-value type for classifying the service category associated with a telephone number.
 
 ## Install
 
@@ -13,20 +13,35 @@ Classifies a telephone number by the network service or carrier category that pr
 dotnet add package Soenneker.Enums.CarrierTypes
 ```
 
-## What you get
+## Usage
 
-- `CarrierType` — Classifies a telephone number by the network service or carrier category that provides it.
+```csharp
+using Soenneker.Enums.CarrierTypes;
 
-## API at a glance
+CarrierType type = CarrierType.Mobile;
+string wireValue = type.Value; // "Mobile"
 
-| API | What it does | Result / important behavior |
-| --- | --- | --- |
-| `CarrierType.FixedLine` | Traditional fixed-location landline service. | Traditional fixed-location landline service. |
-| `CarrierType.Mobile` | Mobile or cellular telephone service. | Mobile or cellular telephone service. |
-| `CarrierType.FixedLineOrMobile` | Number that cannot be distinguished reliably between fixed-line and mobile service. | Number that cannot be distinguished reliably between fixed-line and mobile service. |
-| `CarrierType.PremiumRate` | Premium-rate service that may charge the caller an elevated fee. | Premium-rate service that may charge the caller an elevated fee. |
-| `CarrierType.SharedCost` | Shared-cost service where call charges are divided between caller and recipient. | Shared-cost service where call charges are divided between caller and recipient. |
-| `CarrierType.PersonalNumber` | Personal numbering service that can route calls to one or more destinations. | Personal numbering service that can route calls to one or more destinations. |
-| `CarrierType.Uan` | Universal access number that routes callers to an organization or service. | Universal access number that routes callers to an organization or service. |
-| `CarrierType.Voicemail` | Dedicated voicemail or message-deposit service. | Dedicated voicemail or message-deposit service. |
-| `CarrierType.Unknown` | Carrier category could not be determined from available data. | Carrier category could not be determined from available data. |
+if (CarrierType.TryFromValue(input, out CarrierType? parsed))
+{
+    // parsed is one of the shared static instances
+}
+```
+
+The available values and their serialized strings are:
+
+- `FixedLine`
+- `Mobile`
+- `Voip`
+- `FixedLineOrMobile`
+- `TollFree`
+- `PremiumRate`
+- `SharedCost`
+- `PersonalNumber`
+- `Pager`
+- `Uan`
+- `Voicemail`
+- `Unknown`
+
+`System.Text.Json` serializes the type as its string value and deserializes known values back to the corresponding static instance. `FromValue` throws for an unknown value; use `TryFromValue` at external-input boundaries. `FromName` and `TryFromName` are also generated for member-name lookup.
+
+This package classifies a supplied result; it does not inspect phone numbers, query carrier data, or guarantee that a classification remains accurate after number porting. Use `Unknown` when the upstream source cannot determine a category.
